@@ -13,6 +13,9 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 
+/**
+ * mybatis 配置类
+ */
 @Configuration
 //加上这个注解，使得支持事务
 @EnableTransactionManagement

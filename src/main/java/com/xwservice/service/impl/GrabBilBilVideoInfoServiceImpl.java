@@ -3,9 +3,9 @@ package com.xwservice.service.impl;
 import com.xwservice.bean.VideoUrlInfo;
 import com.xwservice.config.BilBilVideoInfoConfig;
 import com.xwservice.config.WebDriverConfig;
-import com.xwservice.demo.JQuery;
 import com.xwservice.service.GrabBilBilVideoInfoService;
 import com.xwservice.service.VideoInfoService;
+import com.xwservice.util.JQueryUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -51,17 +51,17 @@ public class GrabBilBilVideoInfoServiceImpl implements GrabBilBilVideoInfoServic
             //打开游戏区排行榜链接
             driver.get(bilBilVideoInfoConfig.getGamingZoneLeaderboardUrl());
             //视频热度排序 点一下
-            JQuery.getInstance().runJs(driver, "$(\"#videolist_box div[class='vl-hd clearfix'] div[class='left'] ul[class='tab-list order-tab'] a:eq(1) li\").click();");
+            JQueryUtil.getInstance().runJs(driver, "$(\"#videolist_box div[class='vl-hd clearfix'] div[class='left'] ul[class='tab-list order-tab'] a:eq(1) li\").click();");
             //点一下展示方式 一列展示
-            JQuery.getInstance().runJs(driver, "$(\"#videolist_box div[class='vl-hd clearfix'] div[class='right'] ul[class='tab-list display-tab'] li[class='mod-1']\").click();");
+            JQueryUtil.getInstance().runJs(driver, "$(\"#videolist_box div[class='vl-hd clearfix'] div[class='right'] ul[class='tab-list display-tab'] li[class='mod-1']\").click();");
             //获得一下总共多少页
-            String countText = (String) JQuery.getInstance().runJs(driver, "return $(\"#videolist_box div span[class='pagination-btn count']\").text();");
+            String countText = (String) JQueryUtil.getInstance().runJs(driver, "return $(\"#videolist_box div span[class='pagination-btn count']\").text();");
 
             for (int i = 0; i < 10; i++) {
                 if (countText == null || "".equals(countText)) {
                     Thread.sleep(2000);
 
-                    countText = (String) JQuery.getInstance().runJs(driver, "return $(\"#videolist_box div span[class='pagination-btn count']\").text();");
+                    countText = (String) JQueryUtil.getInstance().runJs(driver, "return $(\"#videolist_box div span[class='pagination-btn count']\").text();");
 
                 }
             }
@@ -90,9 +90,9 @@ public class GrabBilBilVideoInfoServiceImpl implements GrabBilBilVideoInfoServic
                 //抓出本页全部内容  等待遍历解析   顶多20行
 
                 //左侧 图片a标签
-                List<WebElement> webLElements = (List<WebElement>) JQuery.getInstance().runJs(driver, "return $(\"#videolist_box div[class='vd-list-cnt'] [class='vd-list mod-1'] li div[class='l'] div a\");");
+                List<WebElement> webLElements = (List<WebElement>) JQueryUtil.getInstance().runJs(driver, "return $(\"#videolist_box div[class='vd-list-cnt'] [class='vd-list mod-1'] li div[class='l'] div a\");");
                 //标题和详解
-                List<WebElement> webRElements = (List<WebElement>) JQuery.getInstance().runJs(driver, "return $(\"#videolist_box div[class='vd-list-cnt'] [class='vd-list mod-1'] li div[class='r']\");");
+                List<WebElement> webRElements = (List<WebElement>) JQueryUtil.getInstance().runJs(driver, "return $(\"#videolist_box div[class='vd-list-cnt'] [class='vd-list mod-1'] li div[class='r']\");");
 
                 String mouseScrollingTopJsStr = "$('.scroll_top').click(function(){$('html,body').animate({scrollTop: '0px'}, 800);});     ";
 
@@ -102,7 +102,7 @@ public class GrabBilBilVideoInfoServiceImpl implements GrabBilBilVideoInfoServic
 //                        "                clearInterval(timerTop);   " +
 //                        "            }                              " +
 //                        "        },10);                             ";
-                JQuery.getInstance().runJs(driver, mouseScrollingTopJsStr);
+                JQueryUtil.getInstance().runJs(driver, mouseScrollingTopJsStr);
 
 
                 for (int i = 0; i < webLElements.size(); i++) {
@@ -132,10 +132,10 @@ public class GrabBilBilVideoInfoServiceImpl implements GrabBilBilVideoInfoServic
                                     "	ynum = window.scrollY;             " +
                                     "  },                                   " +
                                     "100);                                   ";
-                    JQuery.getInstance().runJs(driver, mouseScrollingJsStr);
+                    JQueryUtil.getInstance().runJs(driver, mouseScrollingJsStr);
 
                     //直接滚动到页面最底部
-//                    JQuery.getInstance().runJs(driver, "var h = $(document).height()-$(window).height();         $(document).scrollTop(h); ");
+//                    JQueryUtil.getInstance().runJs(driver, "var h = $(document).height()-$(window).height();         $(document).scrollTop(h); ");
 
 
                     //图片竟然是瀑布流。。。。
@@ -223,7 +223,7 @@ public class GrabBilBilVideoInfoServiceImpl implements GrabBilBilVideoInfoServic
                 System.out.println("当前页数index = " + index + ">>>总页数=" + countAllNumStr);
 
                 //翻页 下一页
-                JQuery.getInstance().runJs(driver, "$(\"#videolist_box div [class='pager pagination'] li[class='page-item next'] button\").click();");
+                JQueryUtil.getInstance().runJs(driver, "$(\"#videolist_box div [class='pager pagination'] li[class='page-item next'] button\").click();");
 
 
                 Thread.sleep(sleepTime);

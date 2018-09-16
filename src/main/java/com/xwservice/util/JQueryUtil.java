@@ -3,12 +3,22 @@ package com.xwservice.util;
 import org.openqa.selenium.*;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
  * Jquery工具类
  */
 public class JQueryUtil {
+
+    private static JQueryUtil jquery = null;
+
+    public static JQueryUtil getInstance() throws IOException {
+        if (jquery == null) {
+            jquery = new JQueryUtil();
+        }
+        return jquery;
+    }
 
     /**
      * jqeruy文件字符串
