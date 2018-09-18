@@ -11,6 +11,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -31,7 +34,6 @@ public class GrabBilBilVideoInfoServiceImpl implements GrabBilBilVideoInfoServic
     @Autowired
     private WebDriverConfig webDriverConfig;
 
-    private static long sleepTime = 100;
 
     @Override
     public boolean getBilBilVideoGameAreaPopularInfoToDB() {
@@ -225,12 +227,17 @@ public class GrabBilBilVideoInfoServiceImpl implements GrabBilBilVideoInfoServic
                 //翻页 下一页
                 JQueryUtil.getInstance().runJs(driver, "$(\"#videolist_box div [class='pager pagination'] li[class='page-item next'] button\").click();");
 
-
-                Thread.sleep(sleepTime);
-
+                long sleepTime = bilBilVideoInfoConfig.getSleepTime();
+                if (sleepTime >= 1000) {
+                    System.out.println("爬完一页了先睡会 = " + sleepTime + "毫秒");
+                    Thread.sleep(sleepTime);
+                } else {
+                    bilBilVideoInfoConfig.setSleepTime(1000);
+                    System.out.println("至少睡眠1000毫秒，我帮你改一下。爬完一页了先睡会 = " + 1000 + "毫秒");
+                    Thread.sleep(1000);
+                }
             }
 
-//            Thread.sleep(5000);
 
             falg = true;
         } catch (Exception e) {

@@ -14,6 +14,17 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource("classpath:bilbilConfig.properties")
 public class BilBilVideoInfoConfig {
 
+    @Value("${bilbil.sleepTime}")
+    private long sleepTime;
+
+    public long getSleepTime() {
+        return sleepTime;
+    }
+
+    public void setSleepTime(long sleepTime) {
+        this.sleepTime = sleepTime;
+    }
+
     /**
      * 游戏区排行榜
      */
